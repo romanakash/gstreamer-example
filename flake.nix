@@ -21,13 +21,15 @@
                   cargoLock.lockFile = ./Cargo.lock;
                 };
               
+             
               # Rust dev env
               devShells.default = pkgs.mkShell {
                   shellHook = ''
                     export RUST_SRC_PATH=${pkgs.rustPlatform.rustLibSrc}
                   '';
                   buildInputs = with pkgs; [
-                      
+                      glib
+
                       # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
                       gst_all_1.gstreamer
                       # Common plugins like "filesrc" to combine within e.g. gst-launch
@@ -39,12 +41,16 @@
                       # Plugins to reuse ffmpeg to play almost every video format
                       gst_all_1.gst-libav
                   ];
+
                   nativeBuildInputs = with pkgs; [
+                      pkg-config
                       just
                       rustc 
                       cargo 
                       cargo-watch
                       rust-analyzer
+                      
+                      yt-dlp
                   ];
                 };
           };
